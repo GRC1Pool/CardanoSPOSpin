@@ -1,0 +1,113 @@
+################################
+# functions() =  DO NOT TOUCH! #
+# Paterakis E. Ioannis	       # 
+# [GRC1] ADA Pool	       #
+################################
+
+exitme() {
+   bar::stop
+   rm -f ./mapfile.txt
+   rm -f ./sed*
+   exit 1;
+}
+
+trapctrlc() {
+   trap 'exitme' INT
+}
+
+untrapctrlc() {
+   trap '' INT
+}
+
+log2() {
+  local x=$1 n=1 l=0
+  while (( x>n && n>0 ))
+  do
+    let n*=2 l++
+  done
+  echo $l
+}
+
+get_n_rand_bits_alt() {
+  local n=$1
+  local nb_bytes=$(( (n+7)/8 ))
+  local rnd=$(od --read-bytes=$nb_bytes --address-radix=n --format=uL /dev/urandom | tr --delete " ")
+  echo $(( rnd>>(nb_bytes*8-n) ))
+}
+
+rand() {
+  local rnd max=$1
+  # get number of bits needed to represent $max
+  local bitlen=$(log2 $((max+1)))
+  while
+    # could use get_n_rand_bits_alt instead if /dev/urandom is preferred over $RANDOM
+    rnd=$(get_n_rand_bits_alt $bitlen)
+    (( rnd > max ))
+  do :
+  done
+  echo $rnd
+}
+
+function displaytime {
+	local T=$1
+  	local D=$((T/60/60/24))
+  	local H=$((T/60/60%24))
+  	local M=$((T/60%60))
+  	local S=$((T%60))
+  	(( $D > 0 )) && printf '%d day%s ' $D $( (( $D > 1 )) && echo s)
+  	(( $H > 0 )) && printf '%d hour%s ' $H $( (( $H > 1 )) && echo s)
+  	(( $M > 0 )) && printf '%d minute%s ' $M $( (( $M > 1 )) && echo s)
+  	(( $D > 0 || $H > 0 || $M > 0 )) && printf 'and '
+  	printf '%d second%s\n' $S $( (( $S != 1 )) && echo s)
+}
+
+function disq {
+	echo; 
+	echo "================== Cardano's Stake Pool Operators' Spin: A Tool to help Cardano SPOs to pick =================="
+	echo "================== winner(s) for their airdrops/giveaways/prizes. Tool made and used by GRC1 =================="
+	echo "================== Owner Ioannis. Twitter: @Grc1P. Some nice stats: https://grc1.netcount.gr =================="
+	echo "=== Donation Addr:                                                                                          ==="
+	echo "=== addr1q8dyh94atjwqxgsrwa4ejktgw509vw0unhw0esv84pcyhapv520zt0w539umpjy853dlklnnk3eteg4649kgfrks6f9q6pcg9w ==="
+	echo "============================== Feel free to use it for your brilliant ideas !! ================================"
+}
+
+function usage {
+	disq; echo
+	echo; echo "Usage: ./CardanoSPOSpin.sh [PARAMS]"
+
+	echo; echo  "PARAMS"
+	echo -e "\t-m|--mainnet : Use this if you want to use Cardano's Mainnet"
+	echo
+	echo -e "\t-d|--debug   : Use if uou like more details on your screen!!"
+	echo
+	echo -e "\t-w|--weighted: This flag will start a weighted procedure for"
+	echo -e "\t               selecting winners,based on their stake amount"
+	echo -e "\t               If not selected, a random/equal chance select"
+	echo -e "\t               will be performed"
+	echo
+	echo -e "\t-p=|--pool=  : You HAVE to use a PoolID, so the script knows"
+	echo -e "\t               on which pool's delegators to work with!!!"
+	echo
+	echo -e "\t-s=|--spins= : How many winners do you want for your spin?!?"
+	echo
+	echo -e "\t-z=|--noless=: Exclude Delegators with stake less than this."
+	echo -e "\t               This value is in lovelaces (Not ADA)"
+	echo
+	echo -e "\t-e=|--exaddr=: Exclude Delegators. Multiple addresses can be"
+	echo -e "\t               added with commas"
+	echo
+	echo; echo "EXAMPLES: "
+	echo; echo  -e "\t./CardanoRoll.sh -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=10000000000"
+	echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, and exclude addresses with stake less than 10k ADA"
+	echo; echo  -e "\t./CardanoRoll.sh -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -s=5"
+	echo -e "\tRun a simple roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, on all"
+	echo -e "\tthe delegators, and give me 5 winners"
+	echo; echo  -e "\t./CardanoRoll.sh -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=5000000000 -e=stake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e,stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr -n=2"
+	echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, exclude addresses with stake less than 5k ADA, exclude the stake addresses:"
+	echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
+	echo -e "\tand give me 2 winners"
+	echo
+
+}
