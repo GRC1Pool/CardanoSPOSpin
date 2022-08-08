@@ -12,6 +12,7 @@ Feel free to use it for your brilliant ideas !!
 Usage: ./CardanoSPOSpin.sh [PARAMS]
 
 PARAMS
+
         -m|--mainnet : Use this if you want to use Cardano's Mainnet
 
         -d|--debug   : Use if uou like more details on your screen!!
