@@ -1,12 +1,20 @@
 
-Cardano's Stake Pool Operators' Spin: A Tool to help Cardano SPOs to pick 
-winner(s) for their airdrops/giveaways/prizes. Tool made and used by GRC1 
-Owner Ioannis. Twitter: @Grc1P. Some nice stats: https://grc1.netcount.gr 
+Cardano's Stake Pool Operators' Spin: 
+
+A Tool to help Cardano SPOs (and not just them!) to pick winner(s) among their delegators for their airdrops/giveaways/prizes. 
+
+Tool made and used by GRC1 Owner Ioannis. 
+
+Twitter: @Grc1P. 
+
+Step by https://grc1.netcount.gr for some nice statistics about Cardano's network (updated daily).
+
+If you like this script consider splitting some love(laces) by donating to the address below!
 
 === Donation Addr:                                                                                          
 addr1q8dyh94atjwqxgsrwa4ejktgw509vw0unhw0esv84pcyhapv520zt0w539umpjy853dlklnnk3eteg4649kgfrks6f9q6pcg9w 
 
-Feel free to use it for your brilliant ideas !!
+
 
 
 Usage: ./CardanoSPOSpin.sh [PARAMS]
