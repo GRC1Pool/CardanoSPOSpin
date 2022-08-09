@@ -23,12 +23,12 @@ PARAMS
 
         -m|--mainnet : Use this if you want to use Cardano's Mainnet
 
-        -d|--debug   : Use if uou like more details on your screen!!
+        -d|--debug   : Use if you like more details on your screen!!
 
         -w|--weighted: This flag will start a weighted procedure for
                        selecting winners,based on their stake amount
-                       If not selected, a random/equal chance select
-                       will be performed
+                       If not selected , an equal chances' draw will
+                       be performed
 
         -p=|--pool=  : You HAVE to use a PoolID, so the script knows
                        on which pool's delegators to work with!!!
