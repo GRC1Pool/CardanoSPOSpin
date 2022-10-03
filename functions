@@ -71,66 +71,66 @@ function disq {
 }
 
 function usage {
-        disq; echo
-        echo; echo "Usage: ./CardanoSPOSpin.sh [PARAMS]"
+	disq; echo
+	echo; echo "Usage: ./CardanoSPOSpin.sh [PARAMS]"
 
-        echo; echo  "PARAMS"
-        echo -e "\t-m|--mainnet : Use this if you want to use Cardano's Mainnet"
-        echo
-        echo -e "\t-d|--debug   : Use if uou like more details on your screen!!"
-        echo
-        echo -e "\t-w|--weighted: This flag will start a weighted procedure for"
-        echo -e "\t               selecting winners,based on their stake amount"
-        echo -e "\t               If not selected, a random/equal chance draw"
-        echo -e "\t               will be performed"
-        echo
-        echo -e "\t-p=|--pool=  : You HAVE to use a PoolID, so the script knows"
-        echo -e "\t               on which pool's delegators to work with!!!"
-        echo
-        echo -e "\t-s=|--spins= : How many winners do you want for your spin?!?"
-        echo
-        echo -e "\t-z=|--noless=: Exclude Delegators with stake less than this."
-        echo -e "\t               This value is in lovelaces (Not ADA)"
-        echo
-        echo -e "\t-e=|--exaddr=: Exclude Delegators. Multiple addresses can be"
-        echo -e "\t               added with commas"
-        echo
-        echo -e "\t-b=|--policy=: Include Delegators that have *assets* of this"
-        echo -e "\t               policyID in their wallets. Multiple policyIDs"
-        echo -e "\t               can be added here with commas"
-        echo
-        echo -e "\t-a=|--asset= : Include Delegators that have this asset ID in"
-        echo -e "\t               in their wallet addresses. Multiple asset IDs"
-        echo -e "\t               can be added with commas"
-        echo
-        echo; echo "EXAMPLES: "
-        echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=10000000000"
-        echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
-        echo -e "\tinformation on, and exclude addresses with stake less than 10k ADA"
-        echo; echo  -e "\t./CardanoSPOSpin.sh -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -s=5"
-        echo -e "\tRun a simple roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, on all"
-        echo -e "\tthe delegators, and give me 5 winners"
-        echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=5000000000 -e=stake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e,stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr -n=2"
-        echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
-        echo -e "\tinformation on, exclude addresses with stake less than 5k ADA, exclude the stake addresses:"
-        echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
-        echo -e "\tand give me 2 winners"
-        echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=5000000000 -e=stake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e,stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr -n=2 -b=5c80d8420b415e6f277d830e780190f288993019108bebecf5ccf9e1,e6dc9baca01d530b85606ecdd7a1e4317fc080f3b0c807fd70552a80"
-        echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
-        echo -e "\tinformation on, include only the addresses which are owners of any asset that has been minted under these policyIDs:"
-        echo -e "\t5c80d8420b415e6f277d830e780190f288993019108bebecf5ccf9e1, e6dc9baca01d530b85606ecdd7a1e4317fc080f3b0c807fd70552a80 AND"
-        echo -e "\tAND have more than 5k ADA, but exclude the following stake addresses (even if they have more than 5k ADA and/or the above assets:"
-        echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
-        echo -e "\tAs a result, draw 2 winners"
-        echo; echo  -e "\t${0} -d -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -z=10000000000 -s=1 -a=c56d4cceb8a8550534968e1bf165137ca41e908d2d780cc1402079bd4368696c6c65644b6f6e6734353839 -b=12e65fa3585d80cba39dcf4f59363bb68b77f9d3c0784734427b1517"
-        echo -e "\tRun an equal (non-weighted) roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
-        echo -e "\tinformation on, include only the addresses which are owners of any asset that has been minted under this policyID:"
-        echo -e "\t12e65fa3585d80cba39dcf4f59363bb68b77f9d3c0784734427b1517 OR are owners of this assetID: "
-        echo -e "\tc56d4cceb8a8550534968e1bf165137ca41e908d2d780cc1402079bd4368696c6c65644b6f6e6734353839 "
-        echo -e "\tAND have more than 10k ADA, but exclude the following stake addresses (even if they have more than 10k ADA and/or the above assets:"
-        echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
-        echo -e "\tAs a result, draw 1 winner"
-        echo
+	echo; echo  "PARAMS"
+	echo -e "\t-m|--mainnet : Use this if you want to use Cardano's Mainnet"
+	echo
+	echo -e "\t-d|--debug   : Use if uou like more details on your screen!!"
+	echo
+	echo -e "\t-w|--weighted: This flag will start a weighted procedure for"
+	echo -e "\t               selecting winners,based on their stake amount"
+	echo -e "\t               If not selected, a random/equal chance draw"
+	echo -e "\t               will be performed"
+	echo
+	echo -e "\t-p=|--pool=  : You HAVE to use a PoolID, so the script knows"
+	echo -e "\t               on which pool's delegators to work with!!!"
+	echo
+	echo -e "\t-s=|--spins= : How many winners do you want for your spin?!?"
+	echo
+	echo -e "\t-z=|--noless=: Exclude Delegators with stake less than this."
+	echo -e "\t               This value is in lovelaces (Not ADA)"
+	echo
+	echo -e "\t-e=|--exaddr=: Exclude Delegators. Multiple addresses can be"
+	echo -e "\t               added with commas"
+	echo
+	echo -e "\t-b=|--policy=: Include Delegators that have *assets* of this"
+	echo -e "\t               policyID in their wallets. Multiple policyIDs"
+	echo -e "\t               can be added here with commas"
+	echo
+	echo -e "\t-a=|--asset= : Include Delegators that have this asset ID in"
+	echo -e "\t               in their wallet addresses. Multiple asset IDs"
+	echo -e "\t               can be added with commas"
+	echo
+	echo; echo "EXAMPLES: "
+	echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=10000000000"
+	echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, and exclude addresses with stake less than 10k ADA"
+	echo; echo  -e "\t./CardanoSPOSpin.sh -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -s=5"
+	echo -e "\tRun a simple roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, on all"
+	echo -e "\tthe delegators, and give me 5 winners"
+	echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=5000000000 -e=stake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e,stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr -n=2"
+	echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, exclude addresses with stake less than 5k ADA, exclude the stake addresses:"
+	echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
+	echo -e "\tand give me 2 winners"
+	echo; echo  -e "\t${0} -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -d -w -z=5000000000 -e=stake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e,stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr -n=2 -b=5c80d8420b415e6f277d830e780190f288993019108bebecf5ccf9e1,e6dc9baca01d530b85606ecdd7a1e4317fc080f3b0c807fd70552a80"
+	echo -e "\tRun a weighted roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, include only the addresses which are owners of any asset that has been minted under these policyIDs:"
+	echo -e "\t5c80d8420b415e6f277d830e780190f288993019108bebecf5ccf9e1, e6dc9baca01d530b85606ecdd7a1e4317fc080f3b0c807fd70552a80 AND"
+	echo -e "\tAND have more than 5k ADA, but exclude the following stake addresses (even if they have more than 5k ADA and/or the above assets:"
+	echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
+	echo -e "\tAs a result, draw 2 winners"
+	echo; echo  -e "\t${0} -d -m -p=b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40 -z=10000000000 -s=1 -a=c56d4cceb8a8550534968e1bf165137ca41e908d2d780cc1402079bd4368696c6c65644b6f6e6734353839 -b=12e65fa3585d80cba39dcf4f59363bb68b77f9d3c0784734427b1517"
+	echo -e "\tRun an equal (non-weighted) roll on pool with poolid: b3291d8a4e04835ebaa71e0523b37abe64e4cd2eeea35c0886a2dd40, with debug"
+	echo -e "\tinformation on, include only the addresses which are owners of any asset that has been minted under this policyID:"
+	echo -e "\t12e65fa3585d80cba39dcf4f59363bb68b77f9d3c0784734427b1517 OR are owners of this assetID: "
+	echo -e "\tc56d4cceb8a8550534968e1bf165137ca41e908d2d780cc1402079bd4368696c6c65644b6f6e6734353839 "
+	echo -e "\tAND have more than 10k ADA, but exclude the following stake addresses (even if they have more than 10k ADA and/or the above assets:"
+	echo -e "\tstake1uxgxua350uepslksm2dnqeaym2f92qy82axr7p98mvaga4sy6w30e and stake1u9p8r8exvwrl6g2rsx2jgu7afvx9rsn96vpg0h2cya6uxtqnk5vkr"
+	echo -e "\tAs a result, draw 1 winner"
+	echo
 
 }
 
@@ -144,4 +144,3 @@ ArrContains() {
   for i in "${lArr2[@]}";{ [ -n "${tmp[$i]}" ] && return 0;}
   return 1
 }
-
